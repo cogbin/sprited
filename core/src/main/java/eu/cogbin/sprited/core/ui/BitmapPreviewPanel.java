@@ -38,7 +38,11 @@ public class BitmapPreviewPanel extends JPanel {
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(bitmap.getCols(), bitmap.getRows());
+		if (bitmap != null) {
+			return new Dimension(bitmap.getCols(), bitmap.getRows());
+		} else {
+			return new Dimension(64, 64);// TODO reconsider
+		}
 	}
 
 	@Override
@@ -58,9 +62,9 @@ public class BitmapPreviewPanel extends JPanel {
 
 			for (int row = 0; row < bitmap.getRows(); row++) {
 				for (int col = 0; col < bitmap.getCols(); col++) {
-					Color color = bitmap.getColor(col, row);
+					Integer color = bitmap.getColor(col, row);
 					if (color != null) {
-						g2d.setColor(color);
+						g2d.setColor(new Color(color));
 						g2d.fillRect((int) (colWidth * col),
 								(int) (rowHeight * row), ((int) colWidth) + 1,
 								((int) rowHeight) + 1);

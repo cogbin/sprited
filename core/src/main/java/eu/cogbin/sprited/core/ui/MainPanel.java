@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 
 import eu.cogbin.sprited.core.AppContext;
+import eu.cogbin.sprited.core.AppContext.ProjectListener;
 import eu.cogbin.sprited.core.model.Project;
 
 /**
@@ -16,18 +17,18 @@ import eu.cogbin.sprited.core.model.Project;
  * @author Danny
  * 
  */
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel implements ProjectListener {
 
-	public MainPanel(Project project) {
+	private final SpritePanel spritePanel;
+
+	public MainPanel() {
 
 		setLayout(new BorderLayout());
 		setOpaque(true);
 		setBackground(Color.DARK_GRAY);
 
-		SpritePanel spritePanel = new SpritePanel();
+		spritePanel = new SpritePanel();
 		add(spritePanel, BorderLayout.CENTER);
-
-		spritePanel.setSprite(project.getSprite());
 
 		// TODO there should be a better way to do this, maybe Swing keybinding
 		KeyboardFocusManager.getCurrentKeyboardFocusManager()
@@ -58,5 +59,11 @@ public class MainPanel extends JPanel {
 					}
 				});
 
+		AppContext.getInstance().addProjectListener(this);
+
+	}
+
+	public void onProjectChanged(Project project) {
+		spritePanel.setSprite(project.getSprite());
 	}
 }

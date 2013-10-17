@@ -1,25 +1,28 @@
 package eu.cogbin.sprited.core.model;
 
-import java.awt.Color;
-
 /**
  * 
  * @author Danny
- *
+ * 
  */
 public class Bitmap extends AbstractModel implements Cloneable {
 
 	private int cols;
 	private int rows;
-	private Color[][] bitmap;
+	// TODO use something that's properly serializable
+	private Integer[][] bitmap;
+
+	public Bitmap() {
+
+	}
 
 	public Bitmap(int cols, int rows) {
 		this.cols = cols;
 		this.rows = rows;
-		bitmap = new Color[cols][rows];
+		bitmap = new Integer[cols][rows];
 	}
 
-	public Color getColor(int col, int row) {
+	public Integer getColor(int col, int row) {
 		// TODO check out of bounds
 		return bitmap[col][row];
 	}
@@ -31,7 +34,7 @@ public class Bitmap extends AbstractModel implements Cloneable {
 	 * @param color
 	 *            null indicates empty / fully transparent
 	 */
-	public void setColor(int col, int row, Color color) {
+	public void setColor(int col, int row, Integer color) {
 		// TODO check out of bounds
 		bitmap[col][row] = color;
 
@@ -44,6 +47,22 @@ public class Bitmap extends AbstractModel implements Cloneable {
 
 	public int getRows() {
 		return rows;
+	}
+
+	public Integer[][] getBitmap() {
+		return bitmap;
+	}
+
+	public void setBitmap(Integer[][] bitmap) {
+		this.bitmap = bitmap;
+	}
+
+	public void setCols(int cols) {
+		this.cols = cols;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
 	}
 
 	@Override

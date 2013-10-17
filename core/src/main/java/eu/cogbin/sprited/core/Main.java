@@ -1,8 +1,5 @@
 package eu.cogbin.sprited.core;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import eu.cogbin.sprited.core.model.Bitmap;
@@ -10,7 +7,7 @@ import eu.cogbin.sprited.core.model.Frame;
 import eu.cogbin.sprited.core.model.Layer;
 import eu.cogbin.sprited.core.model.Project;
 import eu.cogbin.sprited.core.model.Sprite;
-import eu.cogbin.sprited.core.ui.MainPanel;
+import eu.cogbin.sprited.core.ui.MainFrame;
 
 /**
  * Obviously the main entry point for the application.
@@ -21,6 +18,8 @@ import eu.cogbin.sprited.core.ui.MainPanel;
 public class Main {
 
 	public static void main(String[] args) {
+
+		// TODO configure logging
 
 		// OK this is nasty, but it's just to test, I promise
 		final Project testProject = new Project();
@@ -41,12 +40,9 @@ public class Main {
 		// Fire up the UI on the EDT
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JFrame frame = new JFrame("pixanim");
-				frame.setSize(800, 600);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setLayout(new BorderLayout());
-				frame.add(new MainPanel(testProject), BorderLayout.CENTER);
-				frame.setVisible(true);
+				new MainFrame().setVisible(true);
+
+				AppContext.getInstance().setCurrentProject(testProject);
 			}
 		});
 	}
