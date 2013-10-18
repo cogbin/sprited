@@ -49,6 +49,7 @@ public class Bitmap extends AbstractModel implements Cloneable {
 	 */
 	public void setColor(int col, int row, Color color) {
 		// TODO check out of bounds
+		// TODO handle null color
 		image.setRGB(col, row, color.getRGB());
 
 		fireChange();

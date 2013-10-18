@@ -1,6 +1,7 @@
 package eu.cogbin.sprited.core.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -40,9 +41,53 @@ public class BitmapPixelEditorPanel extends JPanel {
 				repaint();
 			}
 		});
+		revalidate();
 		repaint();
 		// TODO if bitmap already set remove listener
 
+	}
+
+	private double getVisiblePixelWidth() {
+		return (double) (zoomLevel + 1);
+
+		// double colWidth = ((double) getWidth() / (double) bitmap.getCols());
+		//
+		// // TODO remove this, it's just a test
+		// colWidth *= (zoomLevel + 1);
+		//
+		// return colWidth;
+	}
+
+	private double getVisiblePixelHeight() {
+		return (double) (zoomLevel + 1);
+
+		// double rowHeight = ((double) getHeight() / (double)
+		// bitmap.getRows());
+		//
+		// // TODO remove this, it's just a test
+		// rowHeight *= (zoomLevel + 1);
+		//
+		// return rowHeight;
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		if (bitmap != null) {
+			return new Dimension((zoomLevel + 1) * bitmap.getCols(),
+					(zoomLevel + 1) * bitmap.getRows());
+		} else {
+			return new Dimension(1, 1);
+		}
+	}
+
+	@Override
+	public Dimension getMinimumSize() {
+		return getPreferredSize();
+	}
+
+	@Override
+	public Dimension getMaximumSize() {
+		return getPreferredSize();
 	}
 
 	@Override
@@ -53,9 +98,8 @@ public class BitmapPixelEditorPanel extends JPanel {
 
 		if (bitmap != null) {
 
-			double colWidth = ((double) getWidth() / (double) bitmap.getCols());
-			double rowHeight = ((double) getHeight() / (double) bitmap
-					.getRows());
+			double colWidth = getVisiblePixelWidth();
+			double rowHeight = getVisiblePixelHeight();
 
 			// TODO just use bitmap.getImage(); and scale it
 
@@ -103,8 +147,8 @@ public class BitmapPixelEditorPanel extends JPanel {
 
 		// TODO allow dragging to paint more fluidly?
 
-		double colWidth = ((double) getWidth() / (double) bitmap.getCols());
-		double rowHeight = ((double) getHeight() / (double) bitmap.getRows());
+		double colWidth = getVisiblePixelWidth();
+		double rowHeight = getVisiblePixelHeight();
 
 		int col = (int) (p.getX() / colWidth);
 		int row = (int) (p.getY() / rowHeight);
@@ -131,5 +175,13 @@ public class BitmapPixelEditorPanel extends JPanel {
 				.performAction(
 						new SetBitmapPixelAction(bitmap, col, row, color));
 
+	}
+
+	private int zoomLevel = 0;
+
+	public void setZoomLevel(int zoomLevel) {
+		this.zoomLevel = zoomLevel;
+		revalidate();
+		repaint();
 	}
 }

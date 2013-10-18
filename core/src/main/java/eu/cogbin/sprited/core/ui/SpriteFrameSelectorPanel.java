@@ -61,6 +61,8 @@ public class SpriteFrameSelectorPanel extends JPanel {
 		}
 
 		add(copyLastFrameButton);
+
+		validate();
 	}
 
 	private void selectFrame(Frame frame) {

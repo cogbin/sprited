@@ -2,8 +2,11 @@ package eu.cogbin.sprited.core.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import eu.cogbin.sprited.core.model.Layer;
 
@@ -16,6 +19,7 @@ public class LayerPanel extends JPanel {
 
 	private final BitmapPreviewPanel bitmapPreview;
 	private final BitmapPixelEditorPanel bitmapEditor;
+	private final ZoomBar zoomBar;
 
 	public LayerPanel() {
 
@@ -29,7 +33,20 @@ public class LayerPanel extends JPanel {
 		add(eastPanel, BorderLayout.EAST);
 
 		bitmapEditor = new BitmapPixelEditorPanel();
-		add(bitmapEditor, BorderLayout.CENTER);
+		JPanel bitmapEditorPanel = new JPanel();
+		bitmapEditorPanel.add(bitmapEditor);
+		add(new JScrollPane(bitmapEditorPanel), BorderLayout.CENTER);
+
+		zoomBar = new ZoomBar();
+		zoomBar.addPropertyChangeListener(ZoomBar.PROP_ZOOM_LEVEL,
+				new PropertyChangeListener() {
+					public void propertyChange(PropertyChangeEvent ev) {
+						int newZoomLevel = (Integer) ev.getNewValue();
+						// TODO use more global zoom controller
+						bitmapEditor.setZoomLevel(newZoomLevel);
+					}
+				});
+		add(zoomBar, BorderLayout.SOUTH);
 
 	}
 

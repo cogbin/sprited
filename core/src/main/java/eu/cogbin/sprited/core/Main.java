@@ -4,6 +4,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.pushingpixels.substance.api.skin.SubstanceAutumnLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceGraphiteGlassLookAndFeel;
 
 import eu.cogbin.sprited.core.model.Bitmap;
@@ -27,7 +29,10 @@ public class Main {
 
 		// Configure L&F
 		try {
-			UIManager.setLookAndFeel(new SubstanceGraphiteGlassLookAndFeel());
+			// UIManager.setLookAndFeel(new
+			// SubstanceGraphiteGlassLookAndFeel());
+			UIManager
+					.setLookAndFeel(new SubstanceBusinessBlueSteelLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
