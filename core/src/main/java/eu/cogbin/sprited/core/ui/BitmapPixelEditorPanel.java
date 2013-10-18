@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -101,23 +102,8 @@ public class BitmapPixelEditorPanel extends JPanel {
 			double colWidth = getVisiblePixelWidth();
 			double rowHeight = getVisiblePixelHeight();
 
-			// TODO just use bitmap.getImage(); and scale it
-
-			for (int row = 0; row < bitmap.getRows(); row++) {
-				for (int col = 0; col < bitmap.getCols(); col++) {
-					Color color = bitmap.getColor(col, row);
-					if (color != null) {
-						g2d.setColor(color);
-						g2d.fillRect((int) (colWidth * col),
-								(int) (rowHeight * row), ((int) colWidth) + 1,
-								((int) rowHeight) + 1);
-					} else {
-						g2d.clearRect((int) (colWidth * col),
-								(int) (rowHeight * row), ((int) colWidth) + 1,
-								((int) rowHeight) + 1);
-					}
-				}
-			}
+			BufferedImage image = bitmap.getImage();
+			g2d.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
 			// Draw grid, TODO add grid toggle
 			{
