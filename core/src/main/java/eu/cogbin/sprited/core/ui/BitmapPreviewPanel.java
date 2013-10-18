@@ -60,21 +60,23 @@ public class BitmapPreviewPanel extends JPanel {
 			double rowHeight = ((double) getHeight() / (double) bitmap
 					.getRows());
 
-			for (int row = 0; row < bitmap.getRows(); row++) {
-				for (int col = 0; col < bitmap.getCols(); col++) {
-					Integer color = bitmap.getColor(col, row);
-					if (color != null) {
-						g2d.setColor(new Color(color));
-						g2d.fillRect((int) (colWidth * col),
-								(int) (rowHeight * row), ((int) colWidth) + 1,
-								((int) rowHeight) + 1);
-					} else {
-						g2d.clearRect((int) (colWidth * col),
-								(int) (rowHeight * row), ((int) colWidth) + 1,
-								((int) rowHeight) + 1);
-					}
-				}
-			}
+			g2d.drawImage(bitmap.getImage(), 0, 0, null);
+
+			// for (int row = 0; row < bitmap.getRows(); row++) {
+			// for (int col = 0; col < bitmap.getCols(); col++) {
+			// Integer color = bitmap.getColor(col, row);
+			// if (color != null) {
+			// g2d.setColor(new Color(color));
+			// g2d.fillRect((int) (colWidth * col),
+			// (int) (rowHeight * row), ((int) colWidth) + 1,
+			// ((int) rowHeight) + 1);
+			// } else {
+			// g2d.clearRect((int) (colWidth * col),
+			// (int) (rowHeight * row), ((int) colWidth) + 1,
+			// ((int) rowHeight) + 1);
+			// }
+			// }
+			// }
 
 		}
 

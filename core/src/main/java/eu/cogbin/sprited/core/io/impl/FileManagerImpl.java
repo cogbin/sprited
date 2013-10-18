@@ -1,5 +1,6 @@
 package eu.cogbin.sprited.core.io.impl;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -8,8 +9,10 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.module.SimpleModule;
 
 import eu.cogbin.sprited.core.AppContext;
 import eu.cogbin.sprited.core.io.FileManager;
@@ -65,6 +68,12 @@ public class FileManagerImpl implements FileManager {
 
 	public FileManagerImpl() {
 		objectMapper = new ObjectMapper();
+		SimpleModule module = new SimpleModule("Sprited", new Version(0, 1, 0,
+				null));
+		module.addSerializer(new BufferedImageSerializer());
+		module.addDeserializer(BufferedImage.class,
+				new BufferedImageDeserializer());
+		objectMapper.registerModule(module);
 	}
 
 	private void doSave(File toFile) {

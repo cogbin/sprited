@@ -1,5 +1,7 @@
 package eu.cogbin.sprited.core.action;
 
+import java.awt.Color;
+
 import eu.cogbin.sprited.core.model.Bitmap;
 
 /**
@@ -12,16 +14,16 @@ public class SetBitmapPixelAction implements Action {
 	private final Bitmap bitmap;
 	private final int col;
 	private final int row;
-	private final Integer color;
+	private final Color color;
 
-	public SetBitmapPixelAction(Bitmap bitmap, int col, int row, Integer color) {
+	public SetBitmapPixelAction(Bitmap bitmap, int col, int row, Color color) {
 		this.bitmap = bitmap;
 		this.col = col;
 		this.row = row;
 		this.color = color;
 	}
 
-	private Integer previousColor;
+	private Color previousColor;
 
 	public void perform() {
 		previousColor = bitmap.getColor(col, row);

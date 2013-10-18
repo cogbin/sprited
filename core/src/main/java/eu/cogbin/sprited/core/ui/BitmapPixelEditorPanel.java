@@ -57,11 +57,13 @@ public class BitmapPixelEditorPanel extends JPanel {
 			double rowHeight = ((double) getHeight() / (double) bitmap
 					.getRows());
 
+			// TODO just use bitmap.getImage(); and scale it
+
 			for (int row = 0; row < bitmap.getRows(); row++) {
 				for (int col = 0; col < bitmap.getCols(); col++) {
-					Integer color = bitmap.getColor(col, row);
+					Color color = bitmap.getColor(col, row);
 					if (color != null) {
-						g2d.setColor(new Color(color));
+						g2d.setColor(color);
 						g2d.fillRect((int) (colWidth * col),
 								(int) (rowHeight * row), ((int) colWidth) + 1,
 								((int) rowHeight) + 1);
@@ -107,18 +109,18 @@ public class BitmapPixelEditorPanel extends JPanel {
 		int col = (int) (p.getX() / colWidth);
 		int row = (int) (p.getY() / rowHeight);
 
-		Integer color = null;
+		Color color = null;
 
 		switch (mouseButton) {
 		case MouseEvent.BUTTON1:
 			// TODO use selected color, using an editable color palette
-			color = Color.BLUE.getRGB();
+			color = Color.BLUE;
 			break;
 		case MouseEvent.BUTTON2:
-			color = Color.RED.getRGB();
+			color = Color.RED;
 			break;
 		case MouseEvent.BUTTON3:
-			color = null;
+			color = Color.WHITE;
 			break;
 
 		}

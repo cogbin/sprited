@@ -1,5 +1,10 @@
 package eu.cogbin.sprited.core.model;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * 
  * @author Danny
@@ -7,24 +12,27 @@ package eu.cogbin.sprited.core.model;
  */
 public class Bitmap extends AbstractModel implements Cloneable {
 
-	private int cols;
-	private int rows;
-	// TODO use something that's properly serializable
-	private Integer[][] bitmap;
+	private BufferedImage image;
 
 	public Bitmap() {
-
+		this(1, 1);
 	}
 
 	public Bitmap(int cols, int rows) {
-		this.cols = cols;
-		this.rows = rows;
-		bitmap = new Integer[cols][rows];
+		image = new BufferedImage(cols, rows, BufferedImage.TYPE_INT_ARGB);
 	}
 
-	public Integer getColor(int col, int row) {
-		// TODO check out of bounds
-		return bitmap[col][row];
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	@JsonIgnore
+	public Color getColor(int col, int row) {
+		return new Color(image.getRGB(col, row));
 	}
 
 	/**
@@ -34,43 +42,29 @@ public class Bitmap extends AbstractModel implements Cloneable {
 	 * @param color
 	 *            null indicates empty / fully transparent
 	 */
-	public void setColor(int col, int row, Integer color) {
+	public void setColor(int col, int row, Color color) {
 		// TODO check out of bounds
-		bitmap[col][row] = color;
+		image.setRGB(col, row, color.getRGB());
 
 		fireChange();
 	}
 
+	@JsonIgnore
 	public int getCols() {
-		return cols;
+		return image.getWidth();
 	}
 
+	@JsonIgnore
 	public int getRows() {
-		return rows;
-	}
-
-	public Integer[][] getBitmap() {
-		return bitmap;
-	}
-
-	public void setBitmap(Integer[][] bitmap) {
-		this.bitmap = bitmap;
-	}
-
-	public void setCols(int cols) {
-		this.cols = cols;
-	}
-
-	public void setRows(int rows) {
-		this.rows = rows;
+		return image.getHeight();
 	}
 
 	@Override
 	public Bitmap clone() {
-		Bitmap clone = new Bitmap(cols, rows);
-		// TODO use arraycopy?
-		for (int row = 0; row < rows; row++) {
-			for (int col = 0; col < cols; col++) {
+		Bitmap clone = new Bitmap(image.getWidth(), image.getHeight());
+		// TODO just clone the bufferedimage
+		for (int row = 0; row < image.getHeight(); row++) {
+			for (int col = 0; col < image.getWidth(); col++) {
 				clone.setColor(col, row, getColor(col, row));
 			}
 		}
