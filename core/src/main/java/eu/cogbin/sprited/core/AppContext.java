@@ -8,6 +8,7 @@ import eu.cogbin.sprited.core.action.impl.ActionProcessorImpl;
 import eu.cogbin.sprited.core.io.FileManager;
 import eu.cogbin.sprited.core.io.impl.FileManagerImpl;
 import eu.cogbin.sprited.core.model.Project;
+import eu.cogbin.sprited.core.session.EditSession;
 
 /**
  * This is a nasty old singleton (just for now, hopefully)
@@ -25,6 +26,7 @@ public class AppContext {
 
 	private final ActionProcessor actionProcessor = new ActionProcessorImpl();
 	private final FileManager fileManager = new FileManagerImpl();
+	private final EditSession editSession = new EditSession();
 
 	private Project currentProject;
 
@@ -38,6 +40,10 @@ public class AppContext {
 
 	public FileManager getFileManager() {
 		return fileManager;
+	}
+
+	public EditSession getEditSession() {
+		return editSession;
 	}
 
 	public Project getCurrentProject() {

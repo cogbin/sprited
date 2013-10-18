@@ -15,6 +15,7 @@ import eu.cogbin.sprited.core.AppContext;
 import eu.cogbin.sprited.core.action.SetBitmapPixelAction;
 import eu.cogbin.sprited.core.model.AbstractModel.ModelListener;
 import eu.cogbin.sprited.core.model.Bitmap;
+import eu.cogbin.sprited.core.session.EditSession.EditSessionListener;
 
 /**
  * 
@@ -22,6 +23,8 @@ import eu.cogbin.sprited.core.model.Bitmap;
  * 
  */
 public class BitmapPixelEditorPanel extends JPanel {
+
+	private int zoomLevel = 0;
 
 	public BitmapPixelEditorPanel() {
 		setOpaque(true);
@@ -31,44 +34,46 @@ public class BitmapPixelEditorPanel extends JPanel {
 				handleClick(ev.getPoint(), ev.getButton());
 			}
 		});
+
+		AppContext.getInstance().getEditSession()
+				.addEditSessionListener(new EditSessionListener() {
+					public void onZoomLevelChanged(int zoomLevel) {
+						BitmapPixelEditorPanel.this.zoomLevel = zoomLevel;
+						revalidate();
+						repaint();
+					}
+				});
 	}
 
 	private Bitmap bitmap;
 
 	public void setBitmap(Bitmap bitmap) {
+		if (this.bitmap != null) {
+			// Remove listener on previous bitmap
+			this.bitmap.removeListener(bitmapChangeListener);
+		}
+
 		this.bitmap = bitmap;
-		bitmap.addListener(new ModelListener() {
-			public void onChange() {
-				repaint();
-			}
-		});
+
+		// Start listenening for changes on the new bitmap
+		bitmap.addListener(bitmapChangeListener);
+
 		revalidate();
 		repaint();
-		// TODO if bitmap already set remove listener
-
 	}
+
+	private ModelListener bitmapChangeListener = new ModelListener() {
+		public void onChange() {
+			repaint();
+		}
+	};
 
 	private double getVisiblePixelWidth() {
 		return (double) (zoomLevel + 1);
-
-		// double colWidth = ((double) getWidth() / (double) bitmap.getCols());
-		//
-		// // TODO remove this, it's just a test
-		// colWidth *= (zoomLevel + 1);
-		//
-		// return colWidth;
 	}
 
 	private double getVisiblePixelHeight() {
 		return (double) (zoomLevel + 1);
-
-		// double rowHeight = ((double) getHeight() / (double)
-		// bitmap.getRows());
-		//
-		// // TODO remove this, it's just a test
-		// rowHeight *= (zoomLevel + 1);
-		//
-		// return rowHeight;
 	}
 
 	@Override
@@ -163,11 +168,4 @@ public class BitmapPixelEditorPanel extends JPanel {
 
 	}
 
-	private int zoomLevel = 0;
-
-	public void setZoomLevel(int zoomLevel) {
-		this.zoomLevel = zoomLevel;
-		revalidate();
-		repaint();
-	}
 }

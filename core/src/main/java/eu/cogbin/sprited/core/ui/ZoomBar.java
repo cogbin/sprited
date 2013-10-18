@@ -7,6 +7,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import eu.cogbin.sprited.core.AppContext;
+
 /**
  * 
  * @author Danny
@@ -14,14 +16,11 @@ import javax.swing.event.ChangeListener;
  */
 public class ZoomBar extends JPanel {
 
-	public static final String PROP_ZOOM_LEVEL = "zoomLevel";
-
-	private int zoomLevel = 0;
-
 	private final JSlider slider = new JSlider();
 
 	public ZoomBar() {
-		slider.setValue(zoomLevel);
+		slider.setValue(AppContext.getInstance().getEditSession()
+				.getZoomLevel());
 		// TODO make zoom boundaries globally configurable
 		slider.setMaximum(30);
 		slider.setMinimum(0);
@@ -29,16 +28,10 @@ public class ZoomBar extends JPanel {
 		slider.setMajorTickSpacing(5);
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ev) {
-				int oldValue = zoomLevel;
-				int newValue = slider.getValue();
-				zoomLevel = newValue;
-
-				firePropertyChange(PROP_ZOOM_LEVEL, oldValue, newValue);
+				AppContext.getInstance().getEditSession()
+						.setZoomLevel(slider.getValue());
 			}
 		});
-
-		// TODO use a more global zoom controller and listen for changes in it
-		// to adjust the slider accordingly
 
 		// TODO add indicator with zoom percentage
 

@@ -7,8 +7,10 @@ package eu.cogbin.sprited.core.io;
  */
 public interface FileManager {
 
-	void save();
+	void saveProject();
 
-	void open();
+	void openProject();
+
+	void newProject();
 
 }

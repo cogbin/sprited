@@ -16,7 +16,11 @@ import org.codehaus.jackson.map.module.SimpleModule;
 
 import eu.cogbin.sprited.core.AppContext;
 import eu.cogbin.sprited.core.io.FileManager;
+import eu.cogbin.sprited.core.model.Bitmap;
+import eu.cogbin.sprited.core.model.Frame;
+import eu.cogbin.sprited.core.model.Layer;
 import eu.cogbin.sprited.core.model.Project;
+import eu.cogbin.sprited.core.model.Sprite;
 
 /**
  * 
@@ -25,7 +29,9 @@ import eu.cogbin.sprited.core.model.Project;
  */
 public class FileManagerImpl implements FileManager {
 
-	public void save() {
+	public void saveProject() {
+		// TODO off EDT
+
 		// TODO specify extension
 		JFileChooser saveFile = new JFileChooser();
 		int result = saveFile.showSaveDialog(null);
@@ -44,8 +50,10 @@ public class FileManagerImpl implements FileManager {
 		}
 	}
 
-	public void open() {
+	public void openProject() {
 		// TODO off EDT
+		// TODO ask for confirmation if there are any unsaved changes
+
 		// TODO specify extension and filter
 		JFileChooser openFile = new JFileChooser();
 		int result = openFile.showOpenDialog(null);
@@ -62,6 +70,23 @@ public class FileManagerImpl implements FileManager {
 			JOptionPane.showMessageDialog(null, "Open dialog error");
 			break;
 		}
+	}
+
+	public void newProject() {
+		// TODO off EDT
+		// TODO this doesn't really seem to belong here now does it?
+		// TODO ask for confirmation if there are any unsaved changes
+
+		Project project = new Project();
+		Sprite sprite = new Sprite();
+		project.setSprite(sprite);
+		Frame frame = new Frame();
+		sprite.getFrames().add(frame);
+		Layer layer = new Layer();
+		frame.setLayer(layer);
+		layer.setBitmap(new Bitmap(32, 32));
+
+		AppContext.getInstance().setCurrentProject(project);
 	}
 
 	private final ObjectMapper objectMapper;

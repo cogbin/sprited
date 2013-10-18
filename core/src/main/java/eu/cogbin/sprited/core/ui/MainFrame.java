@@ -37,21 +37,29 @@ public class MainFrame extends JFrame {
 
 		// TODO add keylisteners for shortcuts like ctrl+s
 
-		JMenuItem saveItem = new JMenuItem("Save");
-		saveItem.addActionListener(new ActionListener() {
+		JMenuItem newItem = new JMenuItem("New");
+		newItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppContext.getInstance().getFileManager().save();
+				AppContext.getInstance().getFileManager().newProject();
 			}
 		});
-		fileMenu.add(saveItem);
+		fileMenu.add(newItem);
 
 		JMenuItem openItem = new JMenuItem("Open");
 		openItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppContext.getInstance().getFileManager().open();
+				AppContext.getInstance().getFileManager().openProject();
 			}
 		});
 		fileMenu.add(openItem);
+
+		JMenuItem saveItem = new JMenuItem("Save");
+		saveItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppContext.getInstance().getFileManager().saveProject();
+			}
+		});
+		fileMenu.add(saveItem);
 
 		return menu;
 	}

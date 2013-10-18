@@ -4,9 +4,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.pushingpixels.substance.api.skin.SubstanceAutumnLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
-import org.pushingpixels.substance.api.skin.SubstanceGraphiteGlassLookAndFeel;
 
 import eu.cogbin.sprited.core.model.Bitmap;
 import eu.cogbin.sprited.core.model.Frame;
@@ -42,17 +40,9 @@ public class Main {
 		final Project testProject = new Project();
 		testProject.setSprite(new Sprite());
 		Frame testFrame1 = new Frame();
-		Frame testFrame2 = new Frame();
-		Frame testFrame3 = new Frame();
 		testProject.getSprite().getFrames().add(testFrame1);
-		testProject.getSprite().getFrames().add(testFrame2);
-		testProject.getSprite().getFrames().add(testFrame3);
 		testFrame1.setLayer(new Layer());
-		testFrame2.setLayer(new Layer());
-		testFrame3.setLayer(new Layer());
 		testFrame1.getLayer().setBitmap(new Bitmap(32, 32));
-		testFrame2.getLayer().setBitmap(new Bitmap(32, 32));
-		testFrame3.getLayer().setBitmap(new Bitmap(32, 32));
 
 		// Fire up the UI on the EDT
 		SwingUtilities.invokeLater(new Runnable() {
