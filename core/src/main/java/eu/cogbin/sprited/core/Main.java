@@ -1,6 +1,10 @@
 package eu.cogbin.sprited.core;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteGlassLookAndFeel;
 
 import eu.cogbin.sprited.core.model.Bitmap;
 import eu.cogbin.sprited.core.model.Frame;
@@ -20,6 +24,14 @@ public class Main {
 	public static void main(String[] args) {
 
 		// TODO configure logging
+
+		// Configure L&F
+		try {
+			UIManager.setLookAndFeel(new SubstanceGraphiteGlassLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// OK this is nasty, but it's just to test, I promise
 		final Project testProject = new Project();

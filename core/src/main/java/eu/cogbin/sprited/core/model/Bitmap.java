@@ -20,6 +20,11 @@ public class Bitmap extends AbstractModel implements Cloneable {
 
 	public Bitmap(int cols, int rows) {
 		image = new BufferedImage(cols, rows, BufferedImage.TYPE_INT_ARGB);
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
+				image.setRGB(col, row, Color.WHITE.getRGB());
+			}
+		}
 	}
 
 	public void setImage(BufferedImage image) {
