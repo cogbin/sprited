@@ -34,4 +34,12 @@ public class SetBitmapPixelAction implements Action {
 		bitmap.setColor(col, row, previousColor);
 	}
 
+	public void redo() {
+		bitmap.setColor(col, row, color);
+	}
+
+	public boolean runInBackground() {
+		return false;
+	}
+
 }
